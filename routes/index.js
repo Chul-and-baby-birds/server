@@ -25,8 +25,11 @@ router.get('/', function (req, res, next) {
 });
 
 router.get('/main1', function (req, res, next) {
-    let location = '서울';
-    let date = '2018-06-06';
+    let date= req.query.date;
+    let location = req.query.location;
+
+    console.log(date);
+    console.log(location);
     let encodedate = qs.escape(date);
     let retAirStatus=new Array();
 
@@ -65,7 +68,6 @@ router.get('/main1', function (req, res, next) {
 
 router.get('/main2', function (req, res, next) {
 
-    console.log('111111111');
     async.waterfall([
         func1,
         func2,
@@ -77,11 +79,13 @@ router.get('/main2', function (req, res, next) {
     function func1(callback) {
         //TODO get location
         console.log('func1 enter');
-        let XVal=37.6758873;
-        let YVal=126.7455671;
-        let location;
+        let XVal= req.query.XVal;
+        let YVal= req.query.YVal;
+        let location ;
         let API_FIND_STATION = `/MsrstnInfoInqireSvc/getNearbyMsrstnList?tmX=${XVal}&tmY=${YVal}&pageNo=1&numOfRows=10&ServiceKey=${API_KEY}&_returnType=json`;
 
+
+        console.log(API_FIND_STATION);
         axios.get(`${API_DUST_INFO1}${API_FIND_STATION}`)
             .then(result => {
                 console.log('22222');
