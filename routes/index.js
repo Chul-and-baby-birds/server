@@ -96,8 +96,8 @@ router.get('/main2', function (req, res, next) {
     function func2(location, callback) {
         console.log('func2 enter');
         console.log(location);
-        let d = new Date();
-        let tabacco;
+       // let d = new Date();
+       // let tabacco;
         let encodelocation = qs.escape(location); //한글 인코딩
         console.log(encodelocation);
 
@@ -125,7 +125,7 @@ router.get('/main2', function (req, res, next) {
 
 
                // console.log(tabacco);
-               // res.status(200).send(retData);
+                res.status(200).send(retData);
 
 
             }).catch(e => {
