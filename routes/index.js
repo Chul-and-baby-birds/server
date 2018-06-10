@@ -96,13 +96,13 @@ router.get('/main2', function (req, res, next) {
     function func2(location, callback) {
         console.log('func2 enter');
         console.log(location);
-       // let d = new Date();
-       // let tabacco;
+       let d = new Date();
+       let tabacco;
         let encodelocation = qs.escape(location); //한글 인코딩
         console.log(encodelocation);
 
         let API_DUST_INFO01_QUERY = `/ArpltnInforInqireSvc/getMsrstnAcctoRltmMesureDnsty?stationName=${encodelocation}&dataTerm=month&pageNo=1&numOfRows=10&ServiceKey=${API_KEY}&ver=1.3&_returnType=json`;
-        let retData;
+        let retData ;
 
         axios.get(`${API_DUST_INFO1}${API_DUST_INFO01_QUERY}`)
             .then(result => {
@@ -123,9 +123,10 @@ router.get('/main2', function (req, res, next) {
                     "so2Grade": result.data.list[0].so2Grade,
                 }
 
-
-               // console.log(tabacco);
+                tabacco= (Math.floor(d.getHours()* retData.pm10Value)/319);
+               console.log(tabacco);
                 res.status(200).send(retData);
+
 
 
             }).catch(e => {
