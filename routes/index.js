@@ -45,16 +45,6 @@ router.get('/main1', function (req, res, next) {
                 retAirStatus[i] = infoGrade.slice(startString + 5, 7);
 
             }
-           // console.log(retAirStatus);
-
-            // for (i = 0; i <= 2; i++) {
-            //     retData = result.data.list[i].informGrade;
-            //     start = retData.indexOf(location, 0);
-            //     goal = retData[start + 5];
-            //     goal += retData[start + 6];
-            //     console.log(goal);
-            //     grade[i] = goal;
-            // }
 
             res.status(200).send(retAirStatus);
 
@@ -82,13 +72,13 @@ router.get('/main2', function (req, res, next) {
         let XVal= req.query.XVal;
         let YVal= req.query.YVal;
         let location ;
+
         let API_FIND_STATION = `/MsrstnInfoInqireSvc/getNearbyMsrstnList?tmX=${XVal}&tmY=${YVal}&pageNo=1&numOfRows=10&ServiceKey=${API_KEY}&_returnType=json`;
 
 
         console.log(API_FIND_STATION);
         axios.get(`${API_DUST_INFO1}${API_FIND_STATION}`)
             .then(result => {
-                console.log('22222');
                 console.log(result.data);
                 // res.status(200).send(result.data);
                 location = result.data.list[0].stationName;
@@ -106,6 +96,8 @@ router.get('/main2', function (req, res, next) {
     function func2(location, callback) {
         console.log('func2 enter');
         console.log(location);
+        let d = new Date();
+        let tabacco;
         let encodelocation = qs.escape(location); //한글 인코딩
         console.log(encodelocation);
 
@@ -114,7 +106,6 @@ router.get('/main2', function (req, res, next) {
 
         axios.get(`${API_DUST_INFO1}${API_DUST_INFO01_QUERY}`)
             .then(result => {
-                console.log('4444');
 
                 retData = {
                     "dataTime": result.data.list[0].dataTime,
@@ -129,10 +120,13 @@ router.get('/main2', function (req, res, next) {
                     "coValue": result.data.list[0].coValue,
                     "coGrade": result.data.list[0].coGrade,
                     "so2Value": result.data.list[0].so2Value,
-                    "so2Grade": result.data.list[0].so2Grade
+                    "so2Grade": result.data.list[0].so2Grade,
                 }
 
-                res.status(200).send(retData);
+
+               // console.log(tabacco);
+               // res.status(200).send(retData);
+
 
             }).catch(e => {
             console.log('err');
@@ -143,6 +137,10 @@ router.get('/main2', function (req, res, next) {
         console.log('location :', location);
         let result = 'complete';
         callback(null, result)
+
+
+
+
     }
 });
 
