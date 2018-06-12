@@ -25,8 +25,9 @@ router.get('/', function (req, res, next) {
 });
 
 router.get('/main1', function (req, res, next) {
-    let date= req.params.date;
-    let location = req.params.location;
+    let date= req.headers.date;
+    let location = req.headers.location;
+
 
     console.log(date);
     console.log(location);
@@ -39,13 +40,14 @@ router.get('/main1', function (req, res, next) {
         .then(result => {
             console.log('good');
 
-            for(let i = 0; i<=2;++i){
+            for(let i = 1; i<=3;++i){
                 let infoGrade = result.data.list[i].informGrade;
                 let startString = infoGrade.indexOf(location, 0);
                 retAirStatus[i] = infoGrade.slice(startString + 5, 7);
 
             }
-
+            retAirStatus[0]="보통";
+            res.status(200).send(retAirStatus);
         }).catch(e => {
         console.log('err');
         console.log(e);
@@ -67,8 +69,8 @@ router.get('/main2', function (req, res, next) {
     function func1(callback) {
         //TODO get location
         console.log('func1 enter');
-        let XVal= req.params.XVal;
-        let YVal= req.params.YVal;
+        let XVal= req.headers.XVal;
+        let YVal= req.headers.YVal;
         let location ;
 
         let API_FIND_STATION = `/MsrstnInfoInqireSvc/getNearbyMsrstnList?tmX=${XVal}&tmY=${YVal}&pageNo=1&numOfRows=10&ServiceKey=${API_KEY}&_returnType=json`;
@@ -78,11 +80,11 @@ router.get('/main2', function (req, res, next) {
         axios.get(`${API_DUST_INFO1}${API_FIND_STATION}`)
             .then(result => {
                 console.log(result.data);
-                // res.status(200).send(result.data);
                 location = result.data.list[0].stationName;
 
                 callback(null, location);
                 console.log(location);
+
             }).catch(e => {
             console.log('err');
             console.log(e);
@@ -118,9 +120,9 @@ router.get('/main2', function (req, res, next) {
                     "coValue": result.data.list[0].coValue,
                     "coGrade": result.data.list[0].coGrade,
                     "so2Value": result.data.list[0].so2Value,
-                    "so2Grade": result.data.list[0].so2Grade,
+                    "so2Grade": result.data.list[0].so2Grade
 
-                }
+                };
 
                 retData.tabbaco= ((d.getHours()* retData.pm10Value)/319).toFixed(1);
                 //let a = tabacco.toFixed(1);
