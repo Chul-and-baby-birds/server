@@ -46,8 +46,6 @@ router.get('/main1', function (req, res, next) {
 
             }
 
-            res.status(200).send(retAirStatus);
-
         }).catch(e => {
         console.log('err');
         console.log(e);
@@ -121,9 +119,12 @@ router.get('/main2', function (req, res, next) {
                     "coGrade": result.data.list[0].coGrade,
                     "so2Value": result.data.list[0].so2Value,
                     "so2Grade": result.data.list[0].so2Grade,
+
                 }
 
-                tabacco= (Math.floor(d.getHours()* retData.pm10Value)/319);
+                retData.tabbaco= ((d.getHours()* retData.pm10Value)/319).toFixed(1);
+                //let a = tabacco.toFixed(1);
+                //console.log(a);
                console.log(tabacco);
                 res.status(200).send(retData);
 
