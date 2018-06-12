@@ -28,9 +28,6 @@ router.get('/main1', function (req, res, next) {
     let date= req.query.date;
     let location = req.query.location;
 
-
-    console.log(date);
-    console.log(location);
     let encodedate = qs.escape(date);
     let retAirStatus=new Array();
     let retData;
@@ -106,7 +103,7 @@ router.get('/main2', function (req, res, next) {
         console.log('func2 enter');
         console.log(location);
        let d = new Date();
-       let tabacco;
+
         let encodelocation = qs.escape(location); //한글 인코딩
         console.log(encodelocation);
 
@@ -137,18 +134,11 @@ router.get('/main2', function (req, res, next) {
                     retData.tabbaco = 1;
                 }
                 let a = retData.tabbaco.toString().split(".");
-                console.log("aaaaaaa");
-                console.log(retData.tabbaco);
+
                 if(a[1] === '0'){
-
-                    retData = Math.floor(retData.tabbaco);
+                    retData.tabbaco = Math.floor(retData.tabbaco);
                 }
-
-
-               //console.log(tabacco);
                 res.status(200).send(retData);
-
-
 
             }).catch(e => {
             console.log('err');
@@ -159,9 +149,6 @@ router.get('/main2', function (req, res, next) {
         console.log('location :', location);
         let result = 'complete';
         callback(null, result)
-
-
-
 
     }
 });
