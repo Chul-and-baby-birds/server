@@ -136,9 +136,16 @@ router.get('/main2', function (req, res, next) {
                 if (retData.tabbaco ==="NaN"){
                     retData.tabbaco = 1;
                 }
+                let a = retData.tabbaco.toString().split(".");
+                console.log("aaaaaaa");
+                console.log(retData.tabbaco);
+                if(a[1] === '0'){
+
+                    retData = Math.floor(retData.tabbaco);
+                }
 
 
-               console.log(tabacco);
+               //console.log(tabacco);
                 res.status(200).send(retData);
 
 
