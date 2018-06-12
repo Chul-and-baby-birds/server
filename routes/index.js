@@ -33,6 +33,7 @@ router.get('/main1', function (req, res, next) {
     console.log(location);
     let encodedate = qs.escape(date);
     let retAirStatus=new Array();
+    let retData;
 
     let API_FORECAST_QUERY = `/ArpltnInforInqireSvc/getMinuDustFrcstDspth?searchDate=${encodedate}&ServiceKey=${API_KEY}&_returnType=json`;
 
@@ -47,7 +48,15 @@ router.get('/main1', function (req, res, next) {
 
             }
             retAirStatus[0]="보통";
-            res.status(200).send(retAirStatus);
+
+            retData = {
+                "yesterday" : retAirStatus[0],
+                "today" : retAirStatus[1],
+                "tomorrow": retAirStatus[2],
+                "the_day_of_after_tomorrow":retAirStatus[3]
+            };
+
+            res.status(200).send(retData);
         }).catch(e => {
         console.log('err');
         console.log(e);
@@ -125,8 +134,8 @@ router.get('/main2', function (req, res, next) {
                 };
 
                 retData.tabbaco= ((d.getHours()* retData.pm10Value)/319).toFixed(1);
-                //let a = tabacco.toFixed(1);
-                //console.log(a);
+
+
                console.log(tabacco);
                 res.status(200).send(retData);
 
