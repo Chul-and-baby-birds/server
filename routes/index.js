@@ -130,10 +130,12 @@ router.get('/main2', function (req, res, next) {
                     "coGrade": result.data.list[0].coGrade,
                     "so2Value": result.data.list[0].so2Value,
                     "so2Grade": result.data.list[0].so2Grade
-
                 };
 
                 retData.tabbaco= ((d.getHours()* retData.pm10Value)/319).toFixed(1);
+                if (retData.tabbaco ==="NaN"){
+                    retData.tabbaco = 1;
+                }
 
 
                console.log(tabacco);
