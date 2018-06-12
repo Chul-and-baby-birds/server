@@ -25,8 +25,8 @@ router.get('/', function (req, res, next) {
 });
 
 router.get('/main1', function (req, res, next) {
-    let date= req.query.date;
-    let location = req.query.location;
+    let date= req.params.date;
+    let location = req.params.location;
 
     console.log(date);
     console.log(location);
@@ -67,8 +67,8 @@ router.get('/main2', function (req, res, next) {
     function func1(callback) {
         //TODO get location
         console.log('func1 enter');
-        let XVal= req.query.XVal;
-        let YVal= req.query.YVal;
+        let XVal= req.params.XVal;
+        let YVal= req.params.YVal;
         let location ;
 
         let API_FIND_STATION = `/MsrstnInfoInqireSvc/getNearbyMsrstnList?tmX=${XVal}&tmY=${YVal}&pageNo=1&numOfRows=10&ServiceKey=${API_KEY}&_returnType=json`;
